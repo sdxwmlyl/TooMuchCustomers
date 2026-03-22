@@ -191,7 +191,7 @@ cd frontend && npm install && npm run dev
 
 - **Backend**: Node.js + Express + SQLite3
 - **Frontend**: Vue 3 + Element Plus + Pinia
-- **AI**: Ollama / OpenAI API / FunASR 2.0
+- **AI**: Ollama / OpenAI API / Qwen3ASR 0.6B
 - **Storage**: Local filesystem + SQLite
 
 ## 📄 License | 许可证

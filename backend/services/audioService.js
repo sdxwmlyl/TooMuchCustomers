@@ -6,21 +6,23 @@ const util = require('util');
 const execPromise = util.promisify(exec);
 
 /**
- * 音频处理服务 - 集成FunASR 2.0
+ * 音频处理服务 - 集成Qwen3ASR 0.6B
  * 支持：语音转文字、说话人分离、需求问答提取
  */
 class AudioService {
   constructor() {
-    // FunASR服务配置
-    this.funasrConfig = {
-      // 本地FunASR服务地址
-      apiUrl: process.env.FUNASR_URL || 'http://localhost:10095',
-      // 模型选择
-      model: 'paraformer-zh',
+    // Qwen3ASR配置
+    this.config = {
+      // 本地Qwen3ASR服务地址
+      apiUrl: process.env.QWEN3ASR_URL || 'http://localhost:8001',
+      // 模型选择 - Qwen3ASR 0.6B
+      model: 'qwen3asr-0.6b',
       // 是否启用说话人分离
       speakerDiarization: true,
       // 是否启用标点预测
       punctuation: true,
+      // 语言设置
+      language: 'zh',
     };
   }
 
@@ -63,6 +65,7 @@ class AudioService {
         needs,
         duration: transcription.duration,
         speakers: transcription.speakers,
+        model: 'qwen3asr-0.6b',
       };
     } catch (error) {
       console.error('Audio processing error:', error);
@@ -74,7 +77,7 @@ class AudioService {
   }
 
   /**
-   * 调用FunASR进行语音识别
+   * 调用Qwen3ASR进行语音识别
    * @param {string} audioPath - 音频路径
    * @param {object} options - 识别选项
    * @returns {Promise<object>} 识别结果
@@ -97,8 +100,8 @@ class AudioService {
     }
 
     try {
-      // 调用FunASR API
-      const result = await this.callFunASR(processedPath, options);
+      // 调用Qwen3ASR API
+      const result = await this.callQwen3ASR(processedPath, options);
       
       // 清理临时文件
       if (processedPath !== audioPath && fs.existsSync(processedPath)) {
@@ -116,25 +119,30 @@ class AudioService {
   }
 
   /**
-   * 调用FunASR API
+   * 调用Qwen3ASR API
    */
-  async callFunASR(audioPath, options) {
+  async callQwen3ASR(audioPath, options) {
     const axios = require('axios');
     const FormData = require('form-data');
     
     const formData = new FormData();
     formData.append('file', fs.createReadStream(audioPath));
-    formData.append('model', this.funasrConfig.model);
+    formData.append('model', this.config.model);
+    formData.append('language', this.config.language);
     
     if (options.speakerDiarization) {
-      formData.append('speaker_diariazation', 'true');
+      formData.append('speaker_diarization', 'true');
     }
     
-    formData.append('punctuation', this.funasrConfig.punctuation ? 'true' : 'false');
+    formData.append('punctuation', this.config.punctuation ? 'true' : 'false');
+    
+    // Qwen3ASR特定参数
+    formData.append('task', 'transcribe');
+    formData.append('return_timestamps', 'true');
 
     try {
       const response = await axios.post(
-        `${this.funasrConfig.apiUrl}/api/v1/transcribe`,
+        `${this.config.apiUrl}/v1/audio/transcriptions`,
         formData,
         {
           headers: formData.getHeaders(),
@@ -142,11 +150,11 @@ class AudioService {
         }
       );
 
-      return this.parseFunASRResult(response.data);
+      return this.parseQwen3ASRResult(response.data);
     } catch (error) {
-      // 如果FunASR服务不可用，使用模拟数据（开发测试用）
-      if (error.code === 'ECONNREFUSED') {
-        console.warn('FunASR service not available, using mock data');
+      // 如果Qwen3ASR服务不可用，使用模拟数据（开发测试用）
+      if (error.code === 'ECONNREFUSED' || error.response?.status === 404) {
+        console.warn('Qwen3ASR service not available, using mock data');
         return this.generateMockResult(audioPath);
       }
       throw error;
@@ -154,13 +162,14 @@ class AudioService {
   }
 
   /**
-   * 解析FunASR返回结果
+   * 解析Qwen3ASR返回结果
    */
-  parseFunASRResult(data) {
+  parseQwen3ASRResult(data) {
     const segments = [];
     const speakers = new Set();
     let fullText = '';
 
+    // Qwen3ASR返回格式适配
     if (data.segments && Array.isArray(data.segments)) {
       data.segments.forEach((seg, index) => {
         const speaker = seg.speaker || `说话人${(index % 2) + 1}`;
@@ -174,6 +183,15 @@ class AudioService {
         });
         
         fullText += seg.text + ' ';
+      });
+    } else if (data.text) {
+      // 简单文本返回格式
+      fullText = data.text;
+      segments.push({
+        speaker: '说话人1',
+        text: data.text,
+        startTime: 0,
+        endTime: data.duration || 0,
       });
     }
 
@@ -361,7 +379,7 @@ class AudioService {
       return outputPath;
     } catch (error) {
       console.error('FFmpeg conversion error:', error);
-      // 如果转换失败，返回原路径（让FunASR尝试处理）
+      // 如果转换失败，返回原路径（让Qwen3ASR尝试处理）
       return inputPath;
     }
   }
