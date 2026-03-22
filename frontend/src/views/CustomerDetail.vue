@@ -136,7 +136,7 @@
               :auto-upload="false"
               :show-file-list="false"
               :on-change="handleFileSelect"
-              accept=".txt,.pdf,.png,.jpg,.jpeg"
+              accept=".txt,.pdf,.png,.jpg,.jpeg,.mp3,.wav,.m4a,.flac,.ogg"
             >
               <el-button link>
                 <el-icon><Paperclip /></el-icon> 附件
@@ -235,7 +235,7 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { customerApi, uploadApi, analysisApi } from '../api'
+import { customerApi, uploadApi, analysisApi, audioApi } from '../api'
 
 const route = useRoute()
 const customerId = route.params.id
@@ -312,11 +312,25 @@ async function sendMessage() {
   // 如果有文件，先上传
   if (selectedFile.value) {
     try {
-      await uploadApi.upload(customerId, selectedFile.value.raw)
-      await customerApi.sendMessage(customerId, `[上传文件: ${selectedFile.value.name}]`, 'user')
+      const file = selectedFile.value.raw
+      const isAudio = file.type.startsWith('audio/') || /\.(mp3|wav|m4a|flac|ogg)$/i.test(file.name)
+      
+      if (isAudio) {
+        // 音频文件 - 调用音频分析API
+        ElMessage.info('正在分析音频，请稍候...')
+        const res = await audioApi.upload(customerId, file)
+        await customerApi.sendMessage(customerId, `[上传音频: ${selectedFile.value.name}]\n识别出${res.data.qaPairs.length}个问答对，${res.data.needs.length}个需求点`, 'user')
+        // 添加AI分析结果
+        await customerApi.sendMessage(customerId, `音频分析完成！\n\n提取的需求要点：\n${res.data.needs.map((n, i) => `${i+1}. ${n.type}: ${n.description}`).join('\n')}`, 'assistant')
+        await fetchFiles()
+      } else {
+        // 普通文件
+        await uploadApi.upload(customerId, file)
+        await customerApi.sendMessage(customerId, `[上传文件: ${selectedFile.value.name}]`, 'user')
+      }
       selectedFile.value = null
     } catch (error) {
-      ElMessage.error('上传失败')
+      ElMessage.error('上传失败: ' + error.message)
       return
     }
   }

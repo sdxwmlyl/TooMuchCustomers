@@ -31,6 +31,19 @@ export const uploadApi = {
   }
 }
 
+// 音频API
+export const audioApi = {
+  upload: (customerId, file) => {
+    const formData = new FormData()
+    formData.append('audio', file)
+    return api.post(`/audio/${customerId}/upload`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  },
+  getAnalysis: (customerId) => api.get(`/audio/${customerId}/analysis`),
+  getReport: (customerId) => api.get(`/audio/${customerId}/report`)
+}
+
 // 配置API
 export const configApi = {
   get: () => api.get('/config'),

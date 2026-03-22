@@ -31,6 +31,7 @@ app.use('/api/customers', require('./routes/customers'));
 app.use('/api/upload', require('./routes/upload'));
 app.use('/api/config', require('./routes/config'));
 app.use('/api/analysis', require('./routes/analysis'));
+app.use('/api/audio', require('./routes/audio'));
 
 // 健康检查
 app.get('/api/health', (req, res) => {
