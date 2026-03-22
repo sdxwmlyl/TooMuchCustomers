@@ -1,17 +1,113 @@
-# 🤖 TooMuchCustomers - 客户需求调研分析系统
+<div align="center">
 
-> **"客户太多记不住？需求太乱理不清？让AI当你的需求整理小秘书！"**
+# 🤖 TooMuchCustomers
+
+**AI-Powered Customer Requirements Analysis System**
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![Vue.js](https://img.shields.io/badge/Vue.js-3.4+-brightgreen.svg)](https://vuejs.org/)
 [![SQLite](https://img.shields.io/badge/SQLite-3-blue.svg)](https://sqlite.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+[English](#english) | [中文](#中文)
+
+</div>
+
 ---
 
-## 🎯 这是什么神仙工具？
+<a name="english"></a>
+## 🇺🇸 English
 
-这是一个**本地部署**的AI驱动客户需求分析神器！专为那些：
+> **"Too many customers to track? Requirements too messy to organize? Let AI be your requirements secretary!"**
+
+### What is this?
+
+A **locally deployed** AI-powered customer requirements analysis tool for indie developers and small teams who:
+
+- 📱 Have 99+ unread customer messages and can't tell who's who
+- 📝 Scroll through chat history endlessly looking for key requirements
+- 💰 Quote prices by gut feeling, then realize they undercharged
+- 😵 Have customers changing requirements 800 times with no version control
+
+**Core Philosophy**: Let AI do the dirty work, you just make the decisions!
+
+### ✨ Features
+
+#### 🧠 AI Smart Analysis - Your Requirements Translator
+- **Chat Screenshot Recognition**: Drop a WeChat screenshot, AI extracts requirements automatically (supports local multimodal models via Ollama)
+- **Structured Requirements**: Translates "we want an app" into technical solutions, feature lists, and time estimates
+- **Smart Follow-ups**: AI asks "How many users?" "Need admin panel?" to avoid scope creep later
+
+#### 📊 Customer Status Machine - Visual Sales Funnel
+Not just "in progress/done", but professional 9-state workflow:
+
+```
+New → Contacted → Requirements → Analyzed → Quoted → Negotiating → Won
+ ↓       ↓           ↓           ↓          ↓           ↓
+Paused ←──────────────────────────────────────────────────┘
+  ↓
+Lost → New (Restart!)
+```
+
+#### 💬 Conversational Operations - Work Like Chatting
+No clicking around, **everything happens in the chat box**:
+
+| You Say | AI Does |
+|---------|---------|
+| "Analyze requirements" | Reads all materials, outputs structured analysis report |
+| "Generate solution" | Produces technical plan + time estimate + risk assessment |
+| "Cut the time in half" | Re-estimates with optimization suggestions |
+| "Customer wants live streaming" | Records new requirement, updates solution |
+| "Change status to negotiating" | Updates customer status, logs follow-up history |
+
+#### 🎙️ Voice Processing - FunASR 2.0 Integration
+- Upload customer call recordings (MP3/WAV/M4A/FLAC/OGG)
+- Automatic speech-to-text with speaker diarization
+- Extract Q&A pairs from conversations
+- Identify customer needs automatically
+- Generate timestamped analysis reports
+
+#### 📁 Local File Storage - Your Data, Your Control
+- **Zero cloud dependency**: All data stored locally, works offline
+- **Customer isolation**: Each customer has their own folder
+- **Format friendly**: Analysis reports are Markdown, editable anytime
+
+#### 🔌 Flexible AI Models - Not Locked to One Provider
+Supports multiple AI backends with **automatic fallback**:
+- 🦙 **Ollama Local** (Recommended): Llama3.2, Llava, fully offline
+- ☁️ **OpenAI API**: GPT-4, GPT-3.5
+- 🤖 **Other APIs**: Claude, Wenxin, Tongyi...
+
+### 🚀 Quick Start
+
+```bash
+# Clone
+git clone git@github.com:sdxwmlyl/TooMuchCustomers.git
+cd TooMuchCustomers
+
+# Backend
+cd backend && npm install && node server.js
+
+# Frontend
+cd frontend && npm install && npm run dev
+
+# Open http://localhost:5173
+```
+
+### 📖 Documentation
+
+See full documentation in [docs/README_EN.md](docs/README_EN.md)
+
+---
+
+<a name="中文"></a>
+## 🇨🇳 中文
+
+> **"客户太多记不住？需求太乱理不清？让AI当你的需求整理小秘书！"**
+
+### 这是什么神仙工具？
+
+一个**本地部署**的AI驱动客户需求分析神器！专为那些：
 
 - 📱 微信里客户消息99+，分不清谁是谁
 - 📝 聊天记录翻到手软，找不到关键需求
@@ -22,16 +118,14 @@
 
 **核心哲学**：让AI干脏活累活，你只管拍板决策！
 
----
+### ✨ 产品特色
 
-## ✨ 产品特色（吹爆版）
-
-### 🧠 AI智能分析 - 你的需求翻译官
+#### 🧠 AI智能分析 - 你的需求翻译官
 - **聊天截图识别**：丢一张微信截图，AI自动提取需求（支持Ollama本地多模态模型）
 - **需求结构化**：把"我们要做个APP"翻译成技术方案、功能清单、工时估算
 - **智能追问**：AI会主动问"用户量多少？""要不要后台？"，避免后期扯皮
 
-### 📊 客户状态机 - 销售漏斗可视化
+#### 📊 客户状态机 - 销售漏斗可视化
 不是简单的"进行中/已完成"，而是专业的9状态流转：
 
 ```
@@ -42,9 +136,7 @@
 已流失 → 新建（东山再起！）
 ```
 
-**每个状态都有明确含义**，再也不怕忘记跟进到哪一步了！
-
-### 💬 对话式操作 - 像聊天一样工作
+#### 💬 对话式操作 - 像聊天一样工作
 不用点来点去，**所有操作都在聊天框完成**：
 
 | 你说 | AI做 |
@@ -55,194 +147,56 @@
 | "客户说要加直播功能" | 记录新需求，更新方案 |
 | "状态改成谈判中" | 更新客户状态，记录跟进历史 |
 
-### 📁 本地文件存储 - 你的数据你做主
+#### 🎙️ 语音处理 - FunASR 2.0集成
+- 上传客户沟通录音（MP3/WAV/M4A/FLAC/OGG）
+- 自动语音转文字，支持说话人分离
+- 从对话中提取问答对
+- 自动识别客户需求
+- 生成带时间戳的分析报告
+
+#### 📁 本地文件存储 - 你的数据你做主
 - **零云端依赖**：所有数据存在本地文件夹，断网也能用
 - **客户隔离**：每个客户独立文件夹，资料不会串
 - **格式友好**：分析报告是Markdown，随时可以用Typora打开编辑
 
-### 🔌 AI模型自由切换 - 不绑死一家
+#### 🔌 AI模型自由切换 - 不绑死一家
 支持多种AI后端，**主模型挂了自动降级**：
 - 🦙 **Ollama本地部署**（推荐）：Llama3.2、Llava等，完全离线
 - ☁️ **OpenAI API**：GPT-4、GPT-3.5
 - 🤖 **其他兼容API**：Claude、文心一言、通义千问...
 
-**配置简单**：网页点几下就搞定，不用改代码！
+### 🚀 快速开始
 
----
-
-## 🚀 快速开始（5分钟跑起来）
-
-### 前置要求
-- Node.js 18+ （推荐用 [nvm](https://github.com/nvm-sh/nvm) 管理）
-- 一个AI模型（本地Ollama或OpenAI API Key）
-
-### 1. 克隆代码
 ```bash
+# 克隆代码
 git clone git@github.com:sdxwmlyl/TooMuchCustomers.git
 cd TooMuchCustomers
+
+# 启动后端
+cd backend && npm install && node server.js
+
+# 启动前端
+cd frontend && npm install && npm run dev
+
+# 访问 http://localhost:5173
 ```
 
-### 2. 启动后端
-```bash
-cd backend
-npm install
-node server.js
-# 看到 "Server running on http://localhost:8000" 就成功了！
-```
+### 📖 详细文档
 
-### 3. 启动前端
-```bash
-cd frontend
-npm install
-npm run dev
-# 看到 "http://localhost:5173/" 就可以访问了！
-```
-
-### 4. 配置AI模型
-打开 http://localhost:5173/config
-- 如果用Ollama：`provider: ollama`, `apiUrl: http://localhost:11434`
-- 如果用OpenAI：`provider: openai`, `apiKey: sk-xxx`
-
-**搞定！** 🎉
+查看完整文档 [docs/README_CN.md](docs/README_CN.md)
 
 ---
 
-## 📖 使用指南（从0到1）
+## 🛠️ Tech Stack | 技术栈
 
-### Step 1: 创建客户
-首页点击"新建客户"，填写：
-- 客户名称（如：XX科技有限公司）
-- 联系人（张经理）
-- 行业（互联网/金融/教育...）
+- **Backend**: Node.js + Express + SQLite3
+- **Frontend**: Vue 3 + Element Plus + Pinia
+- **AI**: Ollama / OpenAI API / FunASR 2.0
+- **Storage**: Local filesystem + SQLite
 
-### Step 2: 上传资料
-进入客户详情，点击"附件"按钮上传：
-- 微信聊天截图（AI自动识别文字）
-- 需求文档（PDF/TXT）
-- 合同/报价单
+## 📄 License | 许可证
 
-### Step 3: AI分析
-在聊天框输入：
-```
-帮我分析需求
-```
-
-AI会：
-1. 读取所有上传的资料
-2. 提取核心需求点
-3. 识别隐含需求
-4. 输出结构化分析报告（保存到analysis.md）
-
-### Step 4: 生成方案
-输入：
-```
-生成方案
-```
-
-AI会产出：
-- 技术方案概述
-- 功能模块清单
-- 工时估算（按模块细分）
-- 总工时和预估周期
-- 技术风险提醒
-
-保存到solution.md，直接发给客户！
-
-### Step 5: 跟进管理
-通过对话更新状态：
-```
-状态改成已报价
-```
-
-或者在详情页点击"状态"按钮快速切换。
-
----
-
-## 🏗️ 技术架构（给极客看的）
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Frontend (Vue3)                      │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │
-│  │  HomeView   │  │CustomerDetail│  │ ConfigView  │     │
-│  │  (客户列表)  │  │ (AI对话界面) │  │ (模型配置)  │     │
-│  └─────────────┘  └─────────────┘  └─────────────┘     │
-│                          │                              │
-│                    Pinia (状态管理)                      │
-│                          │                              │
-│                    Axios (HTTP)                         │
-└──────────────────────────┬──────────────────────────────┘
-                           │
-┌──────────────────────────┼──────────────────────────────┐
-│                    Backend (Express)                    │
-│  ┌──────────┬──────────┬──────────┬──────────┐         │
-│  │/customers│ /upload  │ /analysis│ /config  │         │
-│  └────┬─────┴────┬─────┴────┬─────┴────┬─────┘         │
-│       │          │          │          │                │
-│  ┌────▼──────────▼──────────▼──────────▼────┐         │
-│  │              SQLite3                      │         │
-│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  │         │
-│  │  │customers│  │conversations│  │followups│  │         │
-│  │  └─────────┘  └─────────┘  └─────────┘  │         │
-│  └──────────────────────────────────────────┘         │
-│                                                         │
-│  ┌──────────────────────────────────────────┐         │
-│  │           Local File System              │         │
-│  │  data/customers/{customer_id}/           │         │
-│  │    ├── raw/ (原始资料)                    │         │
-│  │    ├── analysis.md (需求分析)             │         │
-│  │    └── solution.md (解决方案)             │         │
-│  └──────────────────────────────────────────┘         │
-└─────────────────────────────────────────────────────────┘
-                           │
-                    ┌──────▼──────┐
-                    │  AI Models  │
-                    │  ┌─────────┐│
-                    │  │ Ollama  ││  ← 本地部署，推荐！
-                    │  │ OpenAI  ││  ← 云端API
-                    │  │  ...    ││
-                    │  └─────────┘│
-                    └─────────────┘
-```
-
----
-
-## 🛠️ 开发计划（画饼时间）
-
-- [ ] 📱 移动端适配（PWA）
-- [ ] 📧 邮件提醒（跟进到期自动通知）
-- [ ] 📊 数据看板（成交率、平均客单价...）
-- [ ] 🤝 团队协作（多账号、权限管理）
-- [ ] 🔗 微信机器人（直接在微信里聊）
-- [ ] 📄 合同生成（根据方案自动生成合同模板）
-
-有想法？提Issue！
-
----
-
-## 🤝 贡献指南
-
-1. Fork 本仓库
-2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开一个 Pull Request
-
----
-
-## 📄 License
-
-MIT License - 随便用，但出了问题别找我 😄
-
----
-
-## 💬 最后说两句
-
-这个工具诞生于一个真实的痛点：**客户需求太乱，Excel管不过来，Notion又太重**。
-
-它不完美，但够用。如果你也有同样的困扰，试试它，说不定能帮你省几杯咖啡的时间。
-
-**Happy Coding!** ☕️🚀
+MIT License - Use freely, but don't blame me if it breaks 😄
 
 ---
 
