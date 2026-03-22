@@ -83,18 +83,18 @@ ollama serve
 - 主模型: `gpt-4`
 - 备用模型: `gpt-3.5-turbo`
 
-### FunASR配置（语音处理）
+### Qwen3ASR配置（语音处理）
 
 ```bash
-# 安装FunASR
-pip install funasr
+# 安装Qwen3ASR
+pip install qwen3asr
 
-# 启动FunASR服务
-funasr-server --port 10095
+# 启动Qwen3ASR服务
+qwen3asr-server --port 8001
 ```
 
 配置参数：
-- FunASR地址: `http://localhost:10095`
+- Qwen3ASR地址: `http://localhost:8001`
 
 ---
 
@@ -260,7 +260,7 @@ customer-research-analyzer/
 │   ├── models/         # 数据库模型
 │   ├── routes/         # API路由
 │   ├── services/       # 业务逻辑
-│   │   └── audioService.js  # FunASR集成
+│   │   └── audioService.js  # Qwen3ASR集成
 │   └── server.js       # 入口文件
 ├── frontend/
 │   ├── src/
@@ -285,7 +285,7 @@ customer-research-analyzer/
 # 后端 .env
 PORT=8000
 DATA_DIR=./data
-FUNASR_URL=http://localhost:10095
+QWEN3ASR_URL=http://localhost:8001
 
 # 前端 .env
 VITE_API_URL=http://localhost:8000
@@ -295,15 +295,15 @@ VITE_API_URL=http://localhost:8000
 
 ## 常见问题
 
-### FunASR连接失败
+### Qwen3ASR连接失败
 
-如果FunASR服务不可用，系统会使用模拟数据进行测试。
+如果Qwen3ASR服务不可用，系统会使用模拟数据进行测试。
 
 启用真实处理：
 ```bash
-# 安装并启动FunASR
-pip install funasr
-funasr-server --port 10095
+# 安装并启动Qwen3ASR
+pip install qwen3asr
+qwen3asr-server --port 8001
 ```
 
 ### 跨域错误

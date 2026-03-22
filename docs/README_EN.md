@@ -83,18 +83,18 @@ Configuration:
 - Primary Model: `gpt-4`
 - Fallback Model: `gpt-3.5-turbo`
 
-### FunASR Setup (for Audio Processing)
+### Qwen3ASR Setup (for Audio Processing)
 
 ```bash
-# Install FunASR
-pip install funasr
+# Install Qwen3ASR
+pip install qwen3asr
 
-# Start FunASR service
-funasr-server --port 10095
+# Start Qwen3ASR service
+qwen3asr-server --port 8001
 ```
 
 Configuration:
-- FunASR URL: `http://localhost:10095`
+- Qwen3ASR URL: `http://localhost:8001`
 
 ---
 
@@ -247,7 +247,7 @@ customer-research-analyzer/
 │   ├── models/         # Database models
 │   ├── routes/         # API routes
 │   ├── services/       # Business logic
-│   │   └── audioService.js  # FunASR integration
+│   │   └── audioService.js  # Qwen3ASR integration
 │   └── server.js       # Entry point
 ├── frontend/
 │   ├── src/
@@ -272,7 +272,7 @@ customer-research-analyzer/
 # Backend .env
 PORT=8000
 DATA_DIR=./data
-FUNASR_URL=http://localhost:10095
+QWEN3ASR_URL=http://localhost:8001
 
 # Frontend .env
 VITE_API_URL=http://localhost:8000
@@ -282,15 +282,15 @@ VITE_API_URL=http://localhost:8000
 
 ## Troubleshooting
 
-### FunASR Connection Failed
+### Qwen3ASR Connection Failed
 
-If FunASR service is not available, the system will use mock data for testing.
+If Qwen3ASR service is not available, the system will use mock data for testing.
 
 To enable real processing:
 ```bash
-# Install and start FunASR
-pip install funasr
-funasr-server --port 10095
+# Install and start Qwen3ASR
+pip install qwen3asr
+qwen3asr-server --port 8001
 ```
 
 ### CORS Errors
